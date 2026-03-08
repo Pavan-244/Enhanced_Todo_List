@@ -5,13 +5,11 @@ const TodoItem = props => {
     todoDetails,
     deleteTodo,
     toggleComplete,
-    isEditing,
-    editTitle,
     onEdit,
     onSave,
     onChangeEditTitle,
   } = props
-  const {id, title, isCompleted} = todoDetails
+  const {id, title, isCompleted, isEditing, editTitle} = todoDetails
 
   const onDeleteTodo = () => {
     deleteTodo(id)
@@ -27,6 +25,10 @@ const TodoItem = props => {
 
   const onClickSave = () => {
     onSave(id)
+  }
+
+  const onEditInputChange = event => {
+    onChangeEditTitle(id, event.target.value)
   }
 
   const titleClassName = isCompleted ? 'title completed' : 'title'
@@ -45,7 +47,7 @@ const TodoItem = props => {
             type="text"
             className="edit-input"
             value={editTitle}
-            onChange={onChangeEditTitle}
+            onChange={onEditInputChange}
           />
         ) : (
           <p className={titleClassName}>{title}</p>

@@ -49,10 +49,12 @@ const initialTodosList = [
 
 class SimpleTodos extends Component {
   state = {
-    todosList: initialTodosList,
+    todosList: initialTodosList.map(todo => ({
+      ...todo,
+      isEditing: false,
+      editTitle: '',
+    })),
     inputValue: '',
-    editingId: null,
-    editTitle: '',
   }
 
   onChangeInput = event => {
@@ -86,6 +88,8 @@ class SimpleTodos extends Component {
         id: maxId + i,
         title,
         isCompleted: false,
+        isEditing: false,
+        editTitle: '',
       })
     }
 
@@ -119,28 +123,35 @@ class SimpleTodos extends Component {
   }
 
   onEdit = id => {
-    const {todosList} = this.state
-    const todo = todosList.find(each => each.id === id)
-    this.setState({editingId: id, editTitle: todo.title})
-  }
-
-  onSave = id => {
-    const {editTitle} = this.state
     this.setState(prevState => ({
       todosList: prevState.todosList.map(todo =>
-        todo.id === id ? {...todo, title: editTitle} : todo,
+        todo.id === id
+          ? {...todo, isEditing: true, editTitle: todo.title}
+          : todo,
       ),
-      editingId: null,
-      editTitle: '',
     }))
   }
 
-  onChangeEditTitle = event => {
-    this.setState({editTitle: event.target.value})
+  onSave = id => {
+    this.setState(prevState => ({
+      todosList: prevState.todosList.map(todo =>
+        todo.id === id
+          ? {...todo, title: todo.editTitle, isEditing: false, editTitle: ''}
+          : todo,
+      ),
+    }))
+  }
+
+  onChangeEditTitle = (id, value) => {
+    this.setState(prevState => ({
+      todosList: prevState.todosList.map(todo =>
+        todo.id === id ? {...todo, editTitle: value} : todo,
+      ),
+    }))
   }
 
   render() {
-    const {todosList, inputValue, editingId, editTitle} = this.state
+    const {todosList, inputValue} = this.state
 
     return (
       <div className="app-container">
@@ -166,8 +177,6 @@ class SimpleTodos extends Component {
                 todoDetails={eachTodo}
                 deleteTodo={this.deleteTodo}
                 toggleComplete={this.toggleComplete}
-                isEditing={editingId === eachTodo.id}
-                editTitle={editTitle}
                 onEdit={this.onEdit}
                 onSave={this.onSave}
                 onChangeEditTitle={this.onChangeEditTitle}
