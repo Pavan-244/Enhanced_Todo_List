@@ -44,6 +44,65 @@
   }
 }
 
+.add-todo-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.todo-input {
+  flex-grow: 1;
+  border: 2px solid #ff8542;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Roboto';
+  font-size: 14px;
+  outline: none;
+  color: #000000;
+}
+
+.todo-input:focus {
+  border-color: #ff6b1a;
+  box-shadow: 0 0 4px rgba(255, 133, 66, 0.3);
+}
+
+.todo-input::placeholder {
+  color: #aaaaaa;
+}
+
+@media screen and (min-width: 768px) {
+  .todo-input {
+    font-size: 18px;
+    padding: 12px 16px;
+  }
+}
+
+.add-btn {
+  background-color: #ff8542;
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  margin-left: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.add-btn:hover {
+  background-color: #ff6b1a;
+}
+
+@media screen and (min-width: 768px) {
+  .add-btn {
+    font-size: 18px;
+    padding: 12px 28px;
+  }
+}
+
 .todos-list {
   padding-left: 0px;
+  width: 100%;
 }
